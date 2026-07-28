@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import { students as initialStudents } from "@/data/students";
-import { Badge } from "@/components/ui/badge";
+
 import StudentRow from "./StudentRow";
+
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 
 import {
   Table,
@@ -13,9 +16,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { AnimatePresence } from "framer-motion";
+
 export default function StudentTable() {
-  // State
+  // Student state
   const [students, setStudents] = useState(initialStudents);
+
+  // Search state
+  const [search, setSearch] = useState("");
 
   // Update attendance
   const updateStatus = (
@@ -49,42 +57,61 @@ export default function StudentTable() {
     (student) => student.status === "Late"
   ).length;
 
+  // Search filter
+  const filteredStudents = students.filter((student) =>
+    student.name.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <>
-      <div className="flex gap-4 mb-6">
-        <Badge className="bg-green-500">
-          Present: {presentCount} Students
+      {/* Search */}
+      <div className="mb-6">
+        <Input
+          placeholder="Search students..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="max-w-sm"
+        />
+      </div>
+
+      {/* Summary */}
+      <div className="flex flex-wrap gap-4 mb-6">
+        <Badge className="bg-emerald-500 px-4 py-2">
+          Present: {presentCount}
         </Badge>
 
-        <Badge className="bg-red-500">
-          Absent: {absentCount} Students
+        <Badge className="bg-red-500 px-4 py-2">
+          Absent: {absentCount}
         </Badge>
 
-        <Badge className="bg-yellow-400 text-black">
-          Late: {lateCount} Students
+        <Badge className="bg-amber-400 text-black px-4 py-2">
+          Late: {lateCount}
         </Badge>
       </div>
 
-      <div className="overflow-x-auto rounded-lg border">
-  <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Roll No</TableHead>
-            <TableHead>Status</TableHead>
-          </TableRow>
-        </TableHeader>
+      {/* Table */}
+      <div className="overflow-x-auto rounded-xl border bg-white shadow-sm">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Roll No</TableHead>
+              <TableHead>Status</TableHead>
+            </TableRow>
+          </TableHeader>
 
-        <TableBody>
-          {students.map((student) => (
-            <StudentRow
-              key={student.id}
-              student={student}
-              updateStatus={updateStatus}
-            />
-          ))}
-        </TableBody>
-      </Table>
+          <TableBody>
+            <AnimatePresence mode="popLayout">
+              {filteredStudents.map((student) => (
+                <StudentRow
+                  key={student.id}
+                  student={student}
+                  updateStatus={updateStatus}
+                />
+              ))}
+            </AnimatePresence>
+          </TableBody>
+        </Table>
       </div>
     </>
   );

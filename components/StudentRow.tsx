@@ -1,10 +1,6 @@
-import { Badge } from "@/components/ui/badge";
-import { motion } from "motion/react";
+"use client";
 
-import {
-  TableCell,
-  TableRow,
-} from "@/components/ui/table";
+import { motion } from "framer-motion";
 
 import {
   DropdownMenu,
@@ -12,6 +8,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+import { Badge } from "@/components/ui/badge";
+
+import {
+  TableCell,
+  TableRow,
+} from "@/components/ui/table";
 
 type Student = {
   id: number;
@@ -33,7 +36,14 @@ export default function StudentRow({
   updateStatus,
 }: StudentRowProps) {
   return (
-    <TableRow>
+    <motion.tr
+      layout
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -15 }}
+      transition={{ duration: 0.25 }}
+      className="border-b"
+    >
       <TableCell>{student.name}</TableCell>
 
       <TableCell>{student.rollNo}</TableCell>
@@ -41,53 +51,47 @@ export default function StudentRow({
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-  <motion.div
-    key={student.status}
-    initial={{ scale: 0.8, opacity: 0 }}
-    animate={{ scale: 1, opacity: 1 }}
-    transition={{ duration: 0.2 }}
-  >
-    <Badge
-      className={`cursor-pointer ${
-        student.status === "Present"
-          ? "bg-green-500 hover:bg-green-600"
-          : student.status === "Absent"
-          ? "bg-red-500 hover:bg-red-600"
-          : "bg-yellow-400 text-black hover:bg-yellow-500"
-      }`}
-    >
-      {student.status}
-    </Badge>
-  </motion.div>
-</DropdownMenuTrigger>
+            <motion.div
+              key={student.status}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Badge
+                className={`cursor-pointer px-3 py-1 ${
+                  student.status === "Present"
+                    ? "bg-emerald-500 hover:bg-emerald-600"
+                    : student.status === "Absent"
+                    ? "bg-red-500 hover:bg-red-600"
+                    : "bg-amber-400 text-black hover:bg-amber-500"
+                }`}
+              >
+                {student.status}
+              </Badge>
+            </motion.div>
+          </DropdownMenuTrigger>
 
           <DropdownMenuContent>
             <DropdownMenuItem
-              onClick={() =>
-                updateStatus(student.id, "Present")
-              }
+              onClick={() => updateStatus(student.id, "Present")}
             >
               Present
             </DropdownMenuItem>
 
             <DropdownMenuItem
-              onClick={() =>
-                updateStatus(student.id, "Absent")
-              }
+              onClick={() => updateStatus(student.id, "Absent")}
             >
               Absent
             </DropdownMenuItem>
 
             <DropdownMenuItem
-              onClick={() =>
-                updateStatus(student.id, "Late")
-              }
+              onClick={() => updateStatus(student.id, "Late")}
             >
               Late
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </TableCell>
-    </TableRow>
+    </motion.tr>
   );
 }
