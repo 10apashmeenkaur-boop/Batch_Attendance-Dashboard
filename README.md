@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Student Attendance Dashboard
 
-## Getting Started
+A simple and interactive Student Attendance Dashboard built with **Next.js**, **TypeScript**, **Tailwind CSS**, **shadcn/ui**, and **Framer Motion**.
 
-First, run the development server:
+The dashboard allows users to update student attendance, search students, view live attendance summaries, and experience smooth UI animations.
+
+---
+
+## Features
+
+- Display student attendance from mock JSON data
+- Update attendance status (Present / Absent / Late)
+- Live attendance summary
+- Search students by name
+- Responsive design for smaller screens
+- Animated status badge transitions
+- Animated list filtering using Framer Motion
+
+---
+
+## Tech Stack
+
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Framer Motion
+
+---
+
+## Project Structure
+
+```
+app/
+components/
+data/
+public/
+```
+
+---
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/10apashmeenkaur-boop/Batch_Attendance-Dashboard.git
+```
+
+Move into the project folder:
+
+```bash
+cd Batch_Attendance-Dashboard
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Motion Animations
 
-To learn more about Next.js, take a look at the following resources:
+### 1. Micro Interaction
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Attendance status badges animate whenever the status changes using scale and opacity transitions.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 2. List Animation
 
-## Deploy on Vercel
+Student rows animate smoothly when filtering through the search bar using Framer Motion's layout animations and AnimatePresence.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Tradeoffs / Shortcuts
+
+- Student data is stored in a local mock JSON file instead of using a backend or database to keep the project focused on frontend functionality.
+- Attendance updates are stored using React state, so changes reset after refreshing the page since persistence was not required for this assignment.
+
+---
+
+## Future Improvements
+
+- Attendance history by date
+- Backend integration
+- Persistent storage
+- Sorting by attendance status
+- Export attendance to CSV
+
+---
+
+## Author
+Pashmeen Kaur
